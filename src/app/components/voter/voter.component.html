@@ -1,53 +1,69 @@
-<div class="container mt-5">
+@if(isElectionStarted) {
+  <div class="container mt-5">
   
-  <!-- Centered Heading -->
-  <div class="text-center mb-4">
-    <h2>Shangri-La Valley General Election</h2>
-  </div>
+    <!-- Centered Heading -->
+    <div class="text-center mb-4">
+      <h2>Shangri-La Valley General Election</h2>
+    </div>
+    
+    <!-- Constituency Heading -->
+    <div class="text-left mb-4">
+      <h4>Your Constituency: Shangri-La Valley</h4>
+    </div>
   
-  <!-- Constituency Heading -->
-  <div class="text-left mb-4">
-    <h4>Your Constituency: Shangri-La Valley</h4>
-  </div>
-
-  <!-- Candidates Heading -->
-  <div class="text-center mb-4">
-    <h3>Candidates</h3>
-  </div>
-
-  <!-- Card Section -->
-  <div class="row">
-    <!-- Card 1 -->
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body text-center">
-          <h5 class="card-title">Candidate 1</h5>
-          <p class="card-text">Some description about Candidate 1.</p>
-          <button class="btn btn-primary mx-auto">Vote</button>
+    <!-- Candidates Heading -->
+    <div class="text-center mb-4">
+      <h3>Candidates</h3>
+    </div>
+  
+    <!-- Card Section -->
+    <div class="row">
+      <!-- Card 1 -->
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="card-title">Candidate 1</h5>
+            <p class="card-text">Some description about Candidate 1.</p>
+            <button class="btn btn-primary mx-auto">Vote</button>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body text-center">
-          <h5 class="card-title">Candidate 2</h5>
-          <p class="card-text">Some description about Candidate 2.</p>
-          <button class="btn btn-primary mx-auto">Vote</button>
+  
+      <!-- Card 2 -->
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="card-title">Candidate 2</h5>
+            <p class="card-text">Some description about Candidate 2.</p>
+            <button class="btn btn-primary mx-auto">Vote</button>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body text-center">
-          <h5 class="card-title">Candidate 3</h5>
-          <p class="card-text">Some description about Candidate 3.</p>
-          <button class="btn btn-primary mx-auto">Vote</button>
+  
+      <!-- Card 3 -->
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <h5 class="card-title">Candidate 3</h5>
+            <p class="card-text">Some description about Candidate 3.</p>
+            <button class="btn btn-primary mx-auto">Vote</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+} @else {
+  <div class="container mt-5">
+  
+    <!-- Centered Heading 1 -->
+    <div class="text-center mb-4">
+      <h2>Shangri-La Valley General Election</h2>
+    </div>
+
+    <!-- Centered Heading 2 -->
+    <div class="text-center mb-4 pt-4">
+      <h2 class="sub-heading">General Election Not Started Yet</h2>
+    </div>
+
+  </div>
+}

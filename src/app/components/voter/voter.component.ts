@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './voter.component.scss'
 })
 export class VoterComponent {
-
+  isElectionStarted: boolean = false;
 }
