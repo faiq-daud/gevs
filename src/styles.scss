@@ -2,14 +2,10 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "font-awesome/css/font-awesome.min.css";
 
-// body {
-//     background-color: aqua;
-// }
-
 body {
     background-image: url('./assets/bg.jpg'); /* Replace with the path to your background image */
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     margin: 0;
     padding: 0;
 }

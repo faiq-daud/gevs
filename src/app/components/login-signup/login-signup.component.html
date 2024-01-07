@@ -26,7 +26,7 @@
         <!-- Registeration Form -->
         <div class="col-md-7 col-lg-6 ml-auto">
             @if (showLoginForm){
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                     <!-- Email Address -->
                     <div class="input-group col-lg-12 mb-4">
                       <div class="input-group-prepend">
@@ -64,7 +64,7 @@
                     }
                     @if(loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched) {
                         <div  class="input-group col-lg-6 mb-4">
-                            <small class="text-danger">Password must be at least 6 characters long.</small>
+                            <small class="text-danger">Password must be at least 8 characters long.</small>
                         </div>
                     }
                   
@@ -97,8 +97,13 @@
                             <i class="fa fa-user text-muted"></i>
                           </span>
                         </div>
-                        <input formControlName="firstName" type="text" placeholder="Full Name" class="form-control bg-white border-left-0 border-md">
+                        <input formControlName="fullName" type="text" placeholder="Full Name" class="form-control bg-white border-left-0 border-md">
                       </div>
+                      @if(registrationForm.get('fullName')?.hasError('required') && registrationForm.get('fullName')?.touched) {
+                        <div  class="input-group col-lg-12 mb-4">
+                            <small class="text-danger">Name is required.</small>
+                        </div>
+                      }
                   
                       <!-- Email Address -->
                       <div class="input-group col-lg-12 mb-4">
@@ -130,6 +135,11 @@
                         </div>
                         <input formControlName="dateOfBirth" type="date" placeholder="Date of Birth" class="form-control bg-white border-left-0 border-md">
                       </div>
+                      @if(registrationForm.get('dateOfBirth')?.errors && registrationForm.get('dateOfBirth')?.touched) {
+                        <div  class="input-group col-lg-12 mb-4">
+                            <small class="text-danger">Invalid Date Of Birth.</small>
+                        </div>
+                      }
                       
                       <!-- Constituency -->
                       <div class="input-group col-lg-12 mb-4">
@@ -140,13 +150,17 @@
                         </div>
                         <select formControlName="constituency" class="form-control custom-select bg-white border-left-0 border-md">
                           <option value="">Constituency</option>
-                          <option value="">Shangri-la-Town</option>
-                          <option value="">Northern-Kunlun-Mountain</option>
-                          <option value="">Western-Shangri-la</option>
-                          <option value="">Naboo-Vallery</option>
-                          <option value="">New-Felucia</option>
+                          @for (constituency of constituencies; track constituency) {
+                            <option value="{{constituency.id}}">{{constituency.name}}</option>
+                          }
                         </select>
                       </div>
+                      
+                      @if(registrationForm.get('constituency')?.hasError('required') && registrationForm.get('constituency')?.touched) {
+                        <div  class="input-group col-lg-12 mb-4">
+                            <small class="text-danger">Constituency is required.</small>
+                        </div>
+                      }                  
                   
                       <!-- Password -->
                       <div class="input-group col-lg-6 mb-4">
@@ -157,7 +171,16 @@
                         </div>
                         <input formControlName="password" type="password" placeholder="Password" class="form-control bg-white border-left-0 border-md">
                       </div>
-                      
+                      @if(registrationForm.get('password')?.hasError('required') && registrationForm.get('password')?.touched) {
+                        <div  class="input-group col-lg-6 mb-4">
+                            <small class="text-danger">Password is required.</small>
+                        </div>
+                      }
+                      @if(registrationForm.get('password')?.hasError('minlength') && registrationForm.get('password')?.touched) {
+                        <div  class="input-group col-lg-6 mb-4">
+                            <small class="text-danger">Password must be at least 8 characters long.</small>
+                        </div>
+                      }
 
                       <div class="input-group col-lg-6 mb-4 hide-qr" [ngClass]="{'unhide-qr': scanQR && !action.isLoading}">
                         <ngx-scanner-qrcode  (event)="onEvent($event)" #action="scanner"  [config]="config"></ngx-scanner-qrcode>
@@ -172,6 +195,11 @@
                         </div>
                         <input formControlName="uvcCode" type="text" [readonly]="scanQR" placeholder="Unique Voter Code" class="form-control bg-white border-left-0 border-md">
                       </div>
+                      @if(registrationForm.get('uvcCode')?.hasError('required') && registrationForm.get('uvcCode')?.touched) {
+                        <div  class="input-group col-lg-6 mb-4">
+                            <small class="text-danger">Unique Voter Code is required.</small>
+                        </div>
+                      }
 
                       <div class="input-group col-lg-6 mb-4">
                         <div class="d-flex justify-content-start w-100">
@@ -180,15 +208,15 @@
                             </button>
                             <span class="scan-qr-text _5ml">Scan QR</span>
                         </div>                 
-                      </div>
-                  
+                      </div>                  
+                      
                       <!-- Submit Button -->
                       <div class="form-group col-lg-12 mx-auto mb-0">
                         <button type="submit" class="btn btn-primary btn-block py-2" [disabled]="!registrationForm.valid">
                           <span class="font-weight-bold">Register</span>
                         </button>
                       </div>
-                  
+
                       <!-- Divider Text -->
                       <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
                         <div class="border-bottom w-100 ml-5"></div>
