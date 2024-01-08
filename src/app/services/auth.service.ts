@@ -15,7 +15,6 @@ export class AuthService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree {
-    console.log(route);
     if (route.routeConfig?.path === 'voter' && this.isCurrentUserLoggedIn && this.currentUserRole === 'voter') {
       return true;
     } else if (route.routeConfig?.path === 'commission' && this.isCurrentUserLoggedIn && this.currentUserRole === 'election_officer') {

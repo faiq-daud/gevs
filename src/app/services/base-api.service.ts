@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class BaseApiService {
-  private apiUrl = 'https://78b2-2400-adc5-17b-5900-3d89-3f36-ca3f-2d24.ngrok-free.app'; // Replace with your backend API URL
+  private apiUrl = 'https://0aa4-2400-adc5-17b-5900-5c3c-766c-bf2-eaba.ngrok-free.app'; // Replace with your backend API URL
   private clientId = 'tI3E3Y6Anet3M3M9FH115Vzswe_bQyYqmKWUOlDoj-c';
   private clientSecret = 'jWSPL_P3wXVJXnkmY39ANJ2Pct0ioes7u0MG3QWZqM0'
 
@@ -31,32 +31,36 @@ export class BaseApiService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  get(endpoint: string): Observable<any> {
+  get(endpoint: string, token: string = ''): Observable<any> {
     const url = `${this.apiUrl}/${endpoint}`;
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420'
-    });
-
+    let headers;
+    if (token === '') {
+      headers = new HttpHeaders({
+        'ngrok-skip-browser-warning': '69420'
+      });
+    } else {
+      headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+        'ngrok-skip-browser-warning': '69420'
+      });  
+    }
     // Include headers in the options object
     const options = { headers };
     return this.http.get(url, options).pipe(catchError(this.handleError));
   }
 
-  getWithToken(endpoint: string, token: string) {
+  post(endpoint: string, data: any, token: string = ''): Observable<any> {
     const url = `${this.apiUrl}/${endpoint}`;
+    if (token === '') {
+      return this.http.post(url, data).pipe(catchError(this.handleError));
+    } 
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'ngrok-skip-browser-warning': '69420'
+      'Authorization': `Bearer ${token}`
     });
 
     // Include headers in the options object
     const options = { headers };
-    return this.http.get(url, options).pipe(catchError(this.handleError));
-  }
-
-  post(endpoint: string, data: any): Observable<any> {
-    const url = `${this.apiUrl}/${endpoint}`;
-    return this.http.post(url, data).pipe(catchError(this.handleError));
+    return this.http.post(url, data, options).pipe(catchError(this.handleError));
   }
 
   patch(endpoint: string, body: any,  token: string): Observable<any> {

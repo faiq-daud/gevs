@@ -12,7 +12,7 @@ import { NgxLoadingModule } from 'ngx-loading';
   styleUrl: './voter.component.scss'
 })
 export class VoterComponent {
-  isElectionStarted: boolean = true;
+  isElectionStarted: boolean = false;
   currentConstituency:any = {};
   candidates:any=[];
   hideVoteBtn: boolean = false;
@@ -23,7 +23,21 @@ export class VoterComponent {
   ngOnInit(): void {
     this.loading = true;
     const token:any = sessionStorage.getItem('token');
-    this.apiService.getWithToken('api/v1/current_user_details', token).subscribe(
+
+    this.apiService.get('api/v1/elections/started_election', token).subscribe({
+      next: (data) => {
+        this.isElectionStarted = data.status === "started" ? true : false;
+        if (this.isElectionStarted) {
+          this.getCurrentUserDetails(token);
+        } else {
+          this.loading = false;
+        }
+      }
+    })
+  }
+  
+  getCurrentUserDetails(token: string): void {
+    this.apiService.get('api/v1/current_user_details', token).subscribe(
       {
         next: (data: any) => {
             this.currentConstituency = data?.profile?.constituency;
@@ -37,14 +51,12 @@ export class VoterComponent {
         },
       })
   }
-  
   logout(): void {
     sessionStorage.clear();
     this.router.navigate(['']);
   }
 
   castVote(candidateId: string): void {
-    console.log('add vote');
     const token:any = sessionStorage.getItem('token');
     this.apiService.patch(`api/v1/cast_vote/${candidateId}`,{}, token).subscribe({
       next: (data) => {

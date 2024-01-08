@@ -2,7 +2,12 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Shangri-La Valley General Election</h2>
     <div class="top-right">
-      <button class="btn btn-secondary">Start Election</button>
+      <button class="btn btn-info" [disabled]="isElectionStarted"  (click)="startElection()"> 
+        @if(!isElectionStarted) {
+          Start Election
+        }@else { 
+          Polls Opened
+        }</button>
       <button class="btn btn-secondary" (click)="logout()">Logout</button>
     </div>
   </div>
@@ -11,6 +16,13 @@
   <div class="row">
     <div class="col-md-6">
       <h3>Election Results</h3>
+      <h5>Constituency List</h5>
+      <select class="form-control custom-select bg-white border-left-0 border-md"  [(ngModel)]="selectedConstituencyId" (ngModelChange)="getConstituencyDetail()">
+        <option value=""></option>
+        @for (constituency of constituencies; track constituency) {
+          <option value="{{constituency.id}}">{{constituency.name}}</option>
+        }
+      </select>
       <div class="chart-container">
         <canvas baseChart
         [type]="'pie'"
@@ -35,4 +47,15 @@
         <button class="btn btn-success">Announce</button>
       </div>
     </div>
+  </div>
+
+  <div class="my-container">
+    <ng-template #customLoadingTemplate>
+    </ng-template>
+  
+    <ngx-loading
+      [show]="loading"
+      [config]="{ fullScreenBackdrop: true }"
+      [template]="customLoadingTemplate"
+    ></ngx-loading>
   </div>
