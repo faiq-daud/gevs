@@ -77,8 +77,10 @@ export class LoginSignupComponent {
         this.router.navigate(['commission']);
       }
     }
-    this.apiService.get('api/v1/constituencies').subscribe(data => {
+    this.apiService.get('api/v1/constituencies').subscribe({
+      next: (data) => {
       this.constituencies = data;
+      }
     })
   }
 

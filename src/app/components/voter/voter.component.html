@@ -50,6 +50,15 @@
       <h2 class="sub-heading">General Election Not Started Yet</h2>
     </div>
 
+    @if(lastElectionResult.status === 'ended') {
+      <div class="text-center mb-4 pt-4">
+        @if(!lastElectionResult.winner_id) {
+          <h2 class="sub-heading">Last Election Turned Out As Hung Parliament</h2> 
+        } @else {
+          <h2 class="sub-heading">Last Election Winner Was {{lastElectionResult?.winner?.party_name}}</h2>
+        }
+      </div>
+    }
   </div>
 }
 

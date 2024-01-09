@@ -3,3 +3,12 @@
     display: flex;
     justify-content: space-between;
 }
+
+table.table {
+    background-color: transparent;
+  }
+
+table.table thead th,
+table.table tbody td {
+background-color: transparent;
+}

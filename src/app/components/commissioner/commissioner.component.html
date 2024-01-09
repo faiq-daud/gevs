@@ -2,27 +2,31 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Shangri-La Valley General Election</h2>
     <div class="top-right">
-      <button class="btn btn-info" [disabled]="isElectionStarted"  (click)="startElection()"> 
         @if(!isElectionStarted) {
-          Start Election
+          <button class="btn btn-info" [disabled]="isElectionStarted"  (click)="startElection()"> Start Election </button>
         }@else { 
-          Polls Opened
-        }</button>
+          <button class="btn btn-success" (click)="endElection()">Announce</button>
+        }
       <button class="btn btn-secondary" (click)="logout()">Logout</button>
     </div>
   </div>
-
-  <!-- Chart Section -->
+  <br>
   <div class="row">
     <div class="col-md-6">
       <h3>Election Results</h3>
-      <h5>Constituency List</h5>
-      <select class="form-control custom-select bg-white border-left-0 border-md"  [(ngModel)]="selectedConstituencyId" (ngModelChange)="getConstituencyDetail()">
-        <option value=""></option>
-        @for (constituency of constituencies; track constituency) {
-          <option value="{{constituency.id}}">{{constituency.name}}</option>
-        }
-      </select>
+      <div class="row">
+        <div class="col-sm-3">
+          <h5>Constituency</h5>
+        </div>
+        <div class="col-sm-9">
+          <select class="form-control custom-select bg-white border-left-0 border-md"  [(ngModel)]="selectedConstituencyId" (ngModelChange)="getConstituencyDetail()">
+            <option value="">Select Constituency</option>
+            @for (constituency of constituencies; track constituency) {
+              <option value="{{constituency.id}}">{{constituency.name}}</option>
+            }
+          </select>
+        </div>
+      </div>
       <div class="chart-container">
         <canvas baseChart
         [type]="'pie'"
@@ -37,18 +41,28 @@
 
     <!-- Announce Results Section -->
     <div class="col-md-6">
-      <h3>Announce Results</h3>
-      <div class="form-group">
-        <label for="resultField">Result:</label>
-        <input type="text" id="resultField" class="form-control">
-      </div>
-      <br>
-      <div class="d-flex justify-content-start">
-        <button class="btn btn-success">Announce</button>
-      </div>
+      <h3>All Elections</h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Election Date</th>
+              <th scope="col">Winner Party</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (election of elections; track election) {
+              <tr>
+                <td>{{election.created_at | date:'yyyy-MM-dd':'UTC' }}</td>
+                <td>{{election.status === 'ended' && !election.winner_id ? 'Hung Parliament' : election.winner.party_name}}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
     </div>
   </div>
 
+
+  
   <div class="my-container">
     <ng-template #customLoadingTemplate>
     </ng-template>
